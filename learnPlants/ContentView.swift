@@ -35,13 +35,28 @@ struct ContentView: View {
                     .ignoresSafeArea()
                 
                 VStack {
-//                    Spacer()
-                    Text("Welcome to ") + Text("Which Plant?").italic()
+                    (
+                        Text("Welcome to ").font(.custom("Montserrat-ExtraBold", size: 30)) +
+                        Text("Which Plant?").font(.custom("Montserrat-ExtraBoldItalic", size: 32)).foregroundColor(ColorPalette.shared.olive)
+                    ).padding(.top, 60)
                     Button(action: {
-                        isShowingCamera = true
-                    }, label: {
-                        Text("Press me to check plant")
-                    })
+                            isShowingCamera = true
+                        }) {
+                            Text("Press to find out!")
+                                .font(.custom("Lora-Regular", size: 18)) // Bold font
+                                .foregroundColor(.white) // Text color
+                                .padding() // Internal padding
+                                .background(ColorPalette.shared.mustard) // Button background
+                                .cornerRadius(40) // Rounded corners
+                                .shadow(radius: 5) // Shadow for raised effect
+                                .padding(.top, 375)
+                        }
+                    Text("This app will identify plants, help you learn about them and guide you on a journey to grow healthy plants in your home.")
+                        .font(.custom("HindMadurai-Regular", size: 14))
+                        .padding(.top, 50)
+                        .multilineTextAlignment(.center)
+                        .padding(.horizontal, 20)
+                        .foregroundColor(ColorPalette.shared.olive)
                     Spacer()
                     }.fullScreenCover(isPresented: $isShowingCamera, onDismiss: {
                         if let capturedImage = capturedImage {
