@@ -16,6 +16,13 @@
 		9466DE232CBC69F400088D2D /* PlantIdentifyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9466DE222CBC69F400088D2D /* PlantIdentifyService.swift */; };
 		9466DE252CBC7F3500088D2D /* PlantViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9466DE242CBC7F3500088D2D /* PlantViewModel.swift */; };
 		9466DE272CBDAB2400088D2D /* PlantCameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9466DE262CBDAB2400088D2D /* PlantCameraView.swift */; };
+		946FE87E2CEEECA9004AE1C7 /* Lora-Italic-VariableFont_wght.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 946FE8772CEEECA9004AE1C7 /* Lora-Italic-VariableFont_wght.ttf */; };
+		946FE87F2CEEECA9004AE1C7 /* HindMadurai-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 946FE8782CEEECA9004AE1C7 /* HindMadurai-Light.ttf */; };
+		946FE8802CEEECA9004AE1C7 /* HindMadurai-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 946FE8792CEEECA9004AE1C7 /* HindMadurai-Regular.ttf */; };
+		946FE8812CEEECA9004AE1C7 /* HindMadurai-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 946FE87A2CEEECA9004AE1C7 /* HindMadurai-Medium.ttf */; };
+		946FE8822CEEECA9004AE1C7 /* Lora-VariableFont_wght.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 946FE87B2CEEECA9004AE1C7 /* Lora-VariableFont_wght.ttf */; };
+		946FE8832CEEECA9004AE1C7 /* Montserrat-VariableFont_wght.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 946FE87C2CEEECA9004AE1C7 /* Montserrat-VariableFont_wght.ttf */; };
+		946FE8842CEEECA9004AE1C7 /* Montserrat-Italic-VariableFont_wght.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 946FE87D2CEEECA9004AE1C7 /* Montserrat-Italic-VariableFont_wght.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,6 +36,14 @@
 		9466DE222CBC69F400088D2D /* PlantIdentifyService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantIdentifyService.swift; sourceTree = "<group>"; };
 		9466DE242CBC7F3500088D2D /* PlantViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantViewModel.swift; sourceTree = "<group>"; };
 		9466DE262CBDAB2400088D2D /* PlantCameraView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantCameraView.swift; sourceTree = "<group>"; };
+		946FE8772CEEECA9004AE1C7 /* Lora-Italic-VariableFont_wght.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lora-Italic-VariableFont_wght.ttf"; sourceTree = "<group>"; };
+		946FE8782CEEECA9004AE1C7 /* HindMadurai-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "HindMadurai-Light.ttf"; sourceTree = "<group>"; };
+		946FE8792CEEECA9004AE1C7 /* HindMadurai-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "HindMadurai-Regular.ttf"; sourceTree = "<group>"; };
+		946FE87A2CEEECA9004AE1C7 /* HindMadurai-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "HindMadurai-Medium.ttf"; sourceTree = "<group>"; };
+		946FE87B2CEEECA9004AE1C7 /* Lora-VariableFont_wght.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lora-VariableFont_wght.ttf"; sourceTree = "<group>"; };
+		946FE87C2CEEECA9004AE1C7 /* Montserrat-VariableFont_wght.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-VariableFont_wght.ttf"; sourceTree = "<group>"; };
+		946FE87D2CEEECA9004AE1C7 /* Montserrat-Italic-VariableFont_wght.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Italic-VariableFont_wght.ttf"; sourceTree = "<group>"; };
+		946FE8852CEEED06004AE1C7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +76,8 @@
 		9466DE112CBC64DF00088D2D /* learnPlants */ = {
 			isa = PBXGroup;
 			children = (
+				946FE8852CEEED06004AE1C7 /* Info.plist */,
+				946FE8762CEEEC8A004AE1C7 /* Fonts */,
 				9466DE122CBC64DF00088D2D /* learnPlantsApp.swift */,
 				9466DE142CBC64DF00088D2D /* ContentView.swift */,
 				9466DE162CBC64E100088D2D /* Assets.xcassets */,
@@ -80,6 +97,20 @@
 				9466DE192CBC64E100088D2D /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		946FE8762CEEEC8A004AE1C7 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				946FE8782CEEECA9004AE1C7 /* HindMadurai-Light.ttf */,
+				946FE87A2CEEECA9004AE1C7 /* HindMadurai-Medium.ttf */,
+				946FE8792CEEECA9004AE1C7 /* HindMadurai-Regular.ttf */,
+				946FE8772CEEECA9004AE1C7 /* Lora-Italic-VariableFont_wght.ttf */,
+				946FE87B2CEEECA9004AE1C7 /* Lora-VariableFont_wght.ttf */,
+				946FE87D2CEEECA9004AE1C7 /* Montserrat-Italic-VariableFont_wght.ttf */,
+				946FE87C2CEEECA9004AE1C7 /* Montserrat-VariableFont_wght.ttf */,
+			);
+			path = Fonts;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -140,7 +171,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				946FE87F2CEEECA9004AE1C7 /* HindMadurai-Light.ttf in Resources */,
 				9466DE1A2CBC64E100088D2D /* Preview Assets.xcassets in Resources */,
+				946FE8822CEEECA9004AE1C7 /* Lora-VariableFont_wght.ttf in Resources */,
+				946FE8802CEEECA9004AE1C7 /* HindMadurai-Regular.ttf in Resources */,
+				946FE8842CEEECA9004AE1C7 /* Montserrat-Italic-VariableFont_wght.ttf in Resources */,
+				946FE8832CEEECA9004AE1C7 /* Montserrat-VariableFont_wght.ttf in Resources */,
+				946FE87E2CEEECA9004AE1C7 /* Lora-Italic-VariableFont_wght.ttf in Resources */,
+				946FE8812CEEECA9004AE1C7 /* HindMadurai-Medium.ttf in Resources */,
 				9466DE172CBC64E100088D2D /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -295,6 +333,7 @@
 				DEVELOPMENT_TEAM = 792PYP9LG7;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = learnPlants/Info.plist;
 				INFOPLIST_KEY_NSCameraUsageDescription = testing;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -325,6 +364,7 @@
 				DEVELOPMENT_TEAM = 792PYP9LG7;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = learnPlants/Info.plist;
 				INFOPLIST_KEY_NSCameraUsageDescription = testing;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
