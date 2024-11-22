@@ -11,10 +11,10 @@ import PhotosUI
 struct PlantCameraView: View {
     @Binding var isPresented: Bool
     @Binding var currentImage: UIImage?
-
+    
     @StateObject private var camera = CameraModel()
-    @State private var showGalleryPicker = false // Controls the gallery presentation
-
+    @State private var selectedItem: PhotosPickerItem? // Tracks the selected gallery item
+    
     var body: some View {
         ZStack {
             // Camera feed preview
@@ -54,10 +54,12 @@ struct PlantCameraView: View {
                     
                     Spacer()
                     
-                    // Gallery Thumbnail
-                    Button(action: {
-                        showGalleryPicker = true // Trigger gallery presentation
-                    }) {
+                    // Gallery Picker Button
+                    PhotosPicker(
+                        selection: $selectedItem,
+                        matching: .images,
+                        photoLibrary: .shared()
+                    ) {
                         if let image = currentImage {
                             Image(uiImage: image)
                                 .resizable()
@@ -83,14 +85,29 @@ struct PlantCameraView: View {
         .onDisappear {
             camera.stopSession()
         }
-        .onChange(of: camera.capturedImage) { newImage in
-            if let image = newImage {
-                currentImage = image
-                isPresented = false
+        .onChange(of: selectedItem) { newItem in
+            if let newItem = newItem {
+                loadPhoto(from: newItem)
             }
         }
-        .sheet(isPresented: $showGalleryPicker) {
-            PhotosPickerView(currentImage: $currentImage, isPresented: $showGalleryPicker)
+    }
+    
+    private func loadPhoto(from item: PhotosPickerItem) {
+        Task {
+            do {
+                if let data = try await item.loadTransferable(type: Data.self),
+                   let image = UIImage(data: data) {
+                    DispatchQueue.main.async {
+                        currentImage = image
+                        isPresented = false // Dismiss the camera view after selection
+                    }
+                }
+            } catch {
+                print("Error loading image: \(error)")
+                DispatchQueue.main.async {
+                    isPresented = false // Dismiss on error
+                }
+            }
         }
     }
 }
