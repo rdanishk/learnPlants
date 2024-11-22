@@ -19,11 +19,20 @@ struct ColorPalette {
 }
 
 struct ContentView: View {
+    enum ActiveSheet: Identifiable {
+        case camera, galleryPicker, preview
+        
+        var id: Int {
+            hashValue
+        }
+    }
+    
     @StateObject var viewModel = PlantViewModel()
     
-    @State private var isShowingCamera = false
     @State private var capturedImage: UIImage? = nil
     @State private var showDetailView = false
+    @State private var activeSheet: ActiveSheet?
+    @State private var confirmPhoto = false
     
     var body: some View {
         NavigationStack {
@@ -37,53 +46,64 @@ struct ContentView: View {
                 VStack {
                     (
                         Text("Welcome to ").font(.custom("Montserrat-ExtraBold", size: 30)) +
-                        Text("Which Plant?").font(.custom("Montserrat-ExtraBoldItalic", size: 32)).foregroundColor(ColorPalette.shared.olive)
-                    ).padding(.top, 60)
+                        Text("Which Plant?").font(.custom("Montserrat-ExtraBoldItalic", size: 32))
+                            .foregroundColor(ColorPalette.shared.olive)
+                    )
+                    .padding(.top, 60)
+                    
                     Button(action: {
-                            isShowingCamera = true
-                        }) {
-                            Text("Press to find out!")
-                                .font(.custom("Lora-Regular", size: 18)) // Bold font
-                                .foregroundColor(.white) // Text color
-                                .padding() // Internal padding
-                                .background(ColorPalette.shared.mustard) // Button background
-                                .cornerRadius(40) // Rounded corners
-                                .shadow(radius: 5) // Shadow for raised effect
-                                .padding(.top, 375)
-                        }
+                        activeSheet = .camera
+                    }) {
+                        Text("Press to find out!")
+                            .font(.custom("Lora-Regular", size: 18))
+                            .foregroundColor(.white)
+                            .padding()
+                            .background(ColorPalette.shared.mustard)
+                            .cornerRadius(40)
+                            .shadow(radius: 5)
+                            .padding(.top, 375)
+                    }
+                    
                     Text("This app will identify plants, help you learn about them and guide you on a journey to grow healthy plants in your home.")
                         .font(.custom("HindMadurai-Regular", size: 14))
                         .padding(.top, 50)
                         .multilineTextAlignment(.center)
                         .padding(.horizontal, 20)
                         .foregroundColor(ColorPalette.shared.olive)
+                    
                     Spacer()
-                    }.fullScreenCover(isPresented: $isShowingCamera, onDismiss: {
-                        if let capturedImage = capturedImage {
-                            viewModel.loadData(image: capturedImage)
-                        }
-                }) {
-                    PlantCameraView(isPresented: $isShowingCamera, currentImage: $capturedImage)
-                }.onReceive(viewModel.$plantDetail) { plant in
+                }
+                .onChange(of: capturedImage) { newImage in
+                    if let _ = newImage {
+                        activeSheet = .preview // Navigate to the preview
+                    }
+                }
+                .onChange(of: confirmPhoto) { confirmed in
+                    if confirmed, let image = capturedImage {
+                        print("Making API call with the confirmed image...")
+                        viewModel.loadData(image: image) // API call
+                    }
+                }
+                .onReceive(viewModel.$plantDetail) { plant in
                     if plant != nil {
                         showDetailView = true
                     }
-                }.navigationDestination(isPresented: $showDetailView) {
+                }
+                .navigationDestination(isPresented: $showDetailView) {
                     if let plantDetail = viewModel.plantDetail {
                         PlantDetailView(plant: plantDetail)
                     }
                 }
-            }.onAppear(perform: logAvailableFonts) // Log fonts on appear
-        }
-    }
-    
-    
-    // Function to log available fonts
-    private func logAvailableFonts() {
-        for family in UIFont.familyNames {
-            print("Font Family: \(family)")
-            for name in UIFont.fontNames(forFamilyName: family) {
-                print("    Font Name: \(name)")
+                .sheet(item: $activeSheet) { item in
+                    switch item {
+                    case .camera:
+                        PlantCameraView(isPresented: Binding(get: { activeSheet == .camera }, set: { activeSheet = $0 ? .camera : nil }), currentImage: $capturedImage)
+                    case .galleryPicker:
+                        ImagePicker(selectedImage: $capturedImage, isPresented: Binding(get: { activeSheet == .galleryPicker }, set: { activeSheet = $0 ? .galleryPicker : nil }))
+                    case .preview:
+                        PhotoPreview(image: $capturedImage, isPresented: Binding(get: { activeSheet == .preview }, set: { activeSheet = $0 ? .preview : nil }), isConfirmed: $confirmPhoto)
+                    }
+                }
             }
         }
     }

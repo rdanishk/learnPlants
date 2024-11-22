@@ -6,13 +6,15 @@
 //
 
 import SwiftUI
+import PhotosUI
 
 struct PlantCameraView: View {
     @Binding var isPresented: Bool
     @Binding var currentImage: UIImage?
-    
+
     @StateObject private var camera = CameraModel()
-    
+    @State private var showGalleryPicker = false // Controls the gallery presentation
+
     var body: some View {
         ZStack {
             // Camera feed preview
@@ -22,29 +24,57 @@ struct PlantCameraView: View {
             VStack {
                 Spacer()
                 
-                // Capture Button
-                Button(action: {
-                    camera.capturePhoto()
-                }) {
-                    Circle()
-                        .fill(Color.white)
-                        .frame(width: 70, height: 70)
-                        .overlay(Circle().stroke(Color.gray, lineWidth: 4))
-                        .shadow(radius: 10)
+                HStack {
+                    // Return Icon Button
+                    Button(action: {
+                        isPresented = false // Dismiss the camera view
+                    }) {
+                        Image("return_icon")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 30, height: 30)
+                            .padding()
+                            .background(Color.white)
+                            .clipShape(Circle())
+                            .shadow(radius: 5)
+                    }
+                    
+                    Spacer()
+                    
+                    // Capture Button
+                    Button(action: {
+                        camera.capturePhoto()
+                    }) {
+                        Circle()
+                            .fill(Color.white)
+                            .frame(width: 70, height: 70)
+                            .overlay(Circle().stroke(Color.gray, lineWidth: 4))
+                            .shadow(radius: 10)
+                    }
+                    
+                    Spacer()
+                    
+                    // Gallery Thumbnail
+                    Button(action: {
+                        showGalleryPicker = true // Trigger gallery presentation
+                    }) {
+                        if let image = currentImage {
+                            Image(uiImage: image)
+                                .resizable()
+                                .scaledToFill()
+                                .frame(width: 50, height: 50)
+                                .clipShape(RoundedRectangle(cornerRadius: 10))
+                                .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color.white, lineWidth: 2))
+                        } else {
+                            RoundedRectangle(cornerRadius: 10)
+                                .fill(Color.gray.opacity(0.5))
+                                .frame(width: 50, height: 50)
+                                .overlay(Text("📷").font(.headline).foregroundColor(.white))
+                        }
+                    }
                 }
+                .padding(.horizontal, 30)
                 .padding(.bottom, 50)
-                
-                // Cancel Button
-                Button(action: {
-                    isPresented = false // Dismiss the view
-                }) {
-                    Text("Cancel")
-                        .font(.system(size: 18, weight: .bold))
-                        .foregroundColor(.white)
-                        .padding()
-                        .background(Color.red.opacity(0.8))
-                        .cornerRadius(10)
-                }
             }
         }
         .onAppear {
@@ -53,11 +83,14 @@ struct PlantCameraView: View {
         .onDisappear {
             camera.stopSession()
         }
-        .onChange(of: camera.capturedImage) {
-            if let image = camera.capturedImage {
+        .onChange(of: camera.capturedImage) { newImage in
+            if let image = newImage {
                 currentImage = image
                 isPresented = false
             }
+        }
+        .sheet(isPresented: $showGalleryPicker) {
+            PhotosPickerView(currentImage: $currentImage, isPresented: $showGalleryPicker)
         }
     }
 }
