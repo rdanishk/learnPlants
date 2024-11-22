@@ -1,5 +1,5 @@
 //
-//  PhotoPreview.swift
+//  PhotoPreviewView.swift
 //  learnPlants
 //
 //  Created by Danish Khalid on 11/22/24.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct PhotoPreview: View {
+struct PhotoPreviewView: View {
     @Binding var image: UIImage?
     @Binding var isPresented: Bool
     @Binding var isConfirmed: Bool

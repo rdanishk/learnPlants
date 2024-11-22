@@ -20,7 +20,7 @@ struct ColorPalette {
 
 struct ContentView: View {
     enum ActiveSheet: Identifiable {
-        case camera, galleryPicker, preview
+        case camera, preview
         
         var id: Int {
             hashValue
@@ -98,10 +98,8 @@ struct ContentView: View {
                     switch item {
                     case .camera:
                         PlantCameraView(isPresented: Binding(get: { activeSheet == .camera }, set: { activeSheet = $0 ? .camera : nil }), currentImage: $capturedImage)
-                    case .galleryPicker:
-                        ImagePicker(selectedImage: $capturedImage, isPresented: Binding(get: { activeSheet == .galleryPicker }, set: { activeSheet = $0 ? .galleryPicker : nil }))
                     case .preview:
-                        PhotoPreview(image: $capturedImage, isPresented: Binding(get: { activeSheet == .preview }, set: { activeSheet = $0 ? .preview : nil }), isConfirmed: $confirmPhoto)
+                        PhotoPreviewView(image: $capturedImage, isPresented: Binding(get: { activeSheet == .preview }, set: { activeSheet = $0 ? .preview : nil }), isConfirmed: $confirmPhoto)
                     }
                 }
             }

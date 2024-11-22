@@ -18,7 +18,7 @@ struct PlantCameraView: View {
     var body: some View {
         ZStack {
             // Camera feed preview
-            CameraPreview(camera: camera)
+            CameraUIView(camera: camera)
                 .ignoresSafeArea()
             
             VStack {
