@@ -23,6 +23,8 @@
 		946FE8822CEEECA9004AE1C7 /* Lora-VariableFont_wght.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 946FE87B2CEEECA9004AE1C7 /* Lora-VariableFont_wght.ttf */; };
 		946FE8832CEEECA9004AE1C7 /* Montserrat-VariableFont_wght.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 946FE87C2CEEECA9004AE1C7 /* Montserrat-VariableFont_wght.ttf */; };
 		946FE8842CEEECA9004AE1C7 /* Montserrat-Italic-VariableFont_wght.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 946FE87D2CEEECA9004AE1C7 /* Montserrat-Italic-VariableFont_wght.ttf */; };
+		94E993052CEFE7BE00CDC571 /* CameraModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E993042CEFE7BE00CDC571 /* CameraModel.swift */; };
+		94E993072CEFE7DA00CDC571 /* CameraPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E993062CEFE7DA00CDC571 /* CameraPreview.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +46,8 @@
 		946FE87C2CEEECA9004AE1C7 /* Montserrat-VariableFont_wght.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-VariableFont_wght.ttf"; sourceTree = "<group>"; };
 		946FE87D2CEEECA9004AE1C7 /* Montserrat-Italic-VariableFont_wght.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Italic-VariableFont_wght.ttf"; sourceTree = "<group>"; };
 		946FE8852CEEED06004AE1C7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		94E993042CEFE7BE00CDC571 /* CameraModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraModel.swift; sourceTree = "<group>"; };
+		94E993062CEFE7DA00CDC571 /* CameraPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraPreview.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,6 +91,8 @@
 				9466DE242CBC7F3500088D2D /* PlantViewModel.swift */,
 				9466DE262CBDAB2400088D2D /* PlantCameraView.swift */,
 				94009F0C2CC09818000E73FB /* PlantDetailView.swift */,
+				94E993042CEFE7BE00CDC571 /* CameraModel.swift */,
+				94E993062CEFE7DA00CDC571 /* CameraPreview.swift */,
 			);
 			path = learnPlants;
 			sourceTree = "<group>";
@@ -193,9 +199,11 @@
 				9466DE152CBC64DF00088D2D /* ContentView.swift in Sources */,
 				9466DE232CBC69F400088D2D /* PlantIdentifyService.swift in Sources */,
 				9466DE212CBC69CD00088D2D /* PlantModel.swift in Sources */,
+				94E993072CEFE7DA00CDC571 /* CameraPreview.swift in Sources */,
 				9466DE272CBDAB2400088D2D /* PlantCameraView.swift in Sources */,
 				9466DE252CBC7F3500088D2D /* PlantViewModel.swift in Sources */,
 				94009F0D2CC09818000E73FB /* PlantDetailView.swift in Sources */,
+				94E993052CEFE7BE00CDC571 /* CameraModel.swift in Sources */,
 				9466DE132CBC64DF00088D2D /* learnPlantsApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
