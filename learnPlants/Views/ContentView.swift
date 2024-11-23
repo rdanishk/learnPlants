@@ -28,8 +28,8 @@ struct ContentView: View {
     }
     
     @StateObject var viewModel = PlantViewModel()
+    @StateObject private var cameraModel = CameraModel() // Use CameraModel here
     
-    @State private var capturedImage: UIImage? = nil
     @State private var showDetailView = false
     @State private var activeSheet: ActiveSheet?
     @State private var confirmPhoto = false
@@ -73,13 +73,14 @@ struct ContentView: View {
                     
                     Spacer()
                 }
-                .onChange(of: capturedImage) { newImage in
+                .onChange(of: cameraModel.capturedImage) { newImage in
                     if let _ = newImage {
-                        activeSheet = .preview // Navigate to the preview
+                        print("onChange triggered with new image: \(String(describing: newImage))")
+                        activeSheet = .preview
                     }
                 }
                 .onChange(of: confirmPhoto) { confirmed in
-                    if confirmed, let image = capturedImage {
+                    if confirmed, let image = cameraModel.capturedImage {
                         print("Making API call with the confirmed image...")
                         viewModel.loadData(image: image) // API call
                     }
@@ -97,9 +98,17 @@ struct ContentView: View {
                 .sheet(item: $activeSheet) { item in
                     switch item {
                     case .camera:
-                        PlantCameraView(isPresented: Binding(get: { activeSheet == .camera }, set: { activeSheet = $0 ? .camera : nil }), currentImage: $capturedImage)
+                        PlantCameraView(cameraModel: cameraModel, dismiss: {
+                            activeSheet = nil // Dismiss the sheet
+                        })
                     case .preview:
-                        PhotoPreviewView(image: $capturedImage, isPresented: Binding(get: { activeSheet == .preview }, set: { activeSheet = $0 ? .preview : nil }), isConfirmed: $confirmPhoto)
+                        PhotoPreviewView(
+                            image: $cameraModel.capturedImage,
+                            isConfirmed: $confirmPhoto,
+                            dismiss: {
+                                activeSheet = nil // Dismiss the sheet
+                            }
+                        )
                     }
                 }
             }

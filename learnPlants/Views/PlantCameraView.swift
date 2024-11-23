@@ -9,25 +9,24 @@ import SwiftUI
 import PhotosUI
 
 struct PlantCameraView: View {
-    @Binding var isPresented: Bool
-    @Binding var currentImage: UIImage?
-    
-    @StateObject private var camera = CameraModel()
-    @State private var selectedItem: PhotosPickerItem? // Tracks the selected gallery item
-    
+    @ObservedObject var cameraModel: CameraModel
+    @State private var selectedItem: PhotosPickerItem?
+
+    var dismiss: () -> Void // Closure to handle dismissal of the view
+
     var body: some View {
         ZStack {
             // Camera feed preview
-            CameraUIView(camera: camera)
+            CameraUIView(camera: cameraModel)
                 .ignoresSafeArea()
-            
+
             VStack {
                 Spacer()
-                
+
                 HStack {
                     // Return Icon Button
                     Button(action: {
-                        isPresented = false // Dismiss the camera view
+                        dismiss() // Call the dismiss closure
                     }) {
                         Image("return_icon")
                             .resizable()
@@ -38,12 +37,13 @@ struct PlantCameraView: View {
                             .clipShape(Circle())
                             .shadow(radius: 5)
                     }
-                    
+
                     Spacer()
-                    
+
                     // Capture Button
                     Button(action: {
-                        camera.capturePhoto()
+                        print("Capture button pressed")
+                        cameraModel.capturePhoto()
                     }) {
                         Circle()
                             .fill(Color.white)
@@ -51,16 +51,16 @@ struct PlantCameraView: View {
                             .overlay(Circle().stroke(Color.gray, lineWidth: 4))
                             .shadow(radius: 10)
                     }
-                    
+
                     Spacer()
-                    
+
                     // Gallery Picker Button
                     PhotosPicker(
                         selection: $selectedItem,
                         matching: .images,
                         photoLibrary: .shared()
                     ) {
-                        if let image = currentImage {
+                        if let image = cameraModel.capturedImage {
                             Image(uiImage: image)
                                 .resizable()
                                 .scaledToFill()
@@ -80,10 +80,10 @@ struct PlantCameraView: View {
             }
         }
         .onAppear {
-            camera.startSession()
+            cameraModel.startSession()
         }
         .onDisappear {
-            camera.stopSession()
+            cameraModel.stopSession()
         }
         .onChange(of: selectedItem) { newItem in
             if let newItem = newItem {
@@ -91,22 +91,18 @@ struct PlantCameraView: View {
             }
         }
     }
-    
+
     private func loadPhoto(from item: PhotosPickerItem) {
         Task {
             do {
                 if let data = try await item.loadTransferable(type: Data.self),
                    let image = UIImage(data: data) {
                     DispatchQueue.main.async {
-                        currentImage = image
-                        isPresented = false // Dismiss the camera view after selection
+                        cameraModel.capturedImage = image
                     }
                 }
             } catch {
                 print("Error loading image: \(error)")
-                DispatchQueue.main.async {
-                    isPresented = false // Dismiss on error
-                }
             }
         }
     }

@@ -9,8 +9,8 @@ import SwiftUI
 
 struct PhotoPreviewView: View {
     @Binding var image: UIImage?
-    @Binding var isPresented: Bool
     @Binding var isConfirmed: Bool
+    var dismiss: () -> Void // Closure to handle dismissal
     
     var body: some View {
         ZStack {
@@ -29,8 +29,8 @@ struct PhotoPreviewView: View {
                 HStack {
                     // Discard Button
                     Button(action: {
-                        image = nil // Clear the image
-                        isPresented = false
+                        image = nil
+                        dismiss() // Call the dismiss closure
                     }) {
                         Text("Discard")
                             .font(.custom("Lora-Regular", size: 18))
@@ -45,7 +45,7 @@ struct PhotoPreviewView: View {
                     // Confirm Button
                     Button(action: {
                         isConfirmed = true
-                        isPresented = false
+                        dismiss() // Call the dismiss closure after confirming
                     }) {
                         Text("Use Photo")
                             .font(.custom("Lora-Regular", size: 18))
@@ -57,8 +57,12 @@ struct PhotoPreviewView: View {
                 }
                 .padding()
             }
+            .onAppear {
+                print("PhotoPreviewView appeared with image: \(String(describing: image))")
+            }
+            .onDisappear {
+                print("PhotoPreviewView dismissed")
+            }
         }
     }
 }
-
- 
